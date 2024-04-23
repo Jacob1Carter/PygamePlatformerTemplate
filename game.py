@@ -6,8 +6,12 @@ from ui import Reticule
 
 class GameClass:
     class DisplayClass:
+        resolutions = [(1280, 720), (1920, 1080), (2560, 1440), (3840, 2160)]
+
         def __init__(self):
-            self.win = pygame.display.set_mode((900, 500))
+            self.resolution = self.resolutions[0]
+            self.fullscreen = False
+            self.win = pygame.display.set_mode(self.resolution)
             self.display_ui = True
 
             self.reticule = Reticule()
@@ -27,13 +31,7 @@ class GameClass:
 
         def refresh_ui(self, mousex, mousey, reticule):
             #   Reticule
-            pygame.draw.line(
-                self.win,
-                COLOURS.white,
-                (mousex - reticule.width / 2 - reticule.gap / 2, mousey - reticule.height / 2 - reticule.gap / 2),
-                (mousex - reticule.gap / 2, mousey - reticule.gap / 2),
-                reticule.thickness
-            )
+            reticule.display(mousex, mousey, self.win)
 
     class Scene:
         def __init__(self):
