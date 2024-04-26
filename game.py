@@ -1,6 +1,7 @@
 #   game.py
 import pygame
 from const import COLOURS
+from entities import Player, Floor
 from ui import Reticule
 
 
@@ -8,7 +9,8 @@ class GameClass:
     class DisplayClass:
         resolutions = [(1280, 720), (1920, 1080), (2560, 1440), (3840, 2160)]
 
-        def __init__(self):
+        def __init__(self, game):
+            self.game = game
             self.resolution = self.resolutions[0]
             self.fullscreen = False
             self.win = pygame.display.set_mode(self.resolution)
@@ -27,7 +29,8 @@ class GameClass:
             pygame.display.update()
 
         def refresh_game_view(self):
-            pass
+            for entity in self.game.active_scene.active_entities:
+                entity.display(self.win)
 
         def refresh_ui(self, mousex, mousey, reticule):
             #   Reticule
@@ -35,7 +38,7 @@ class GameClass:
 
     class Scene:
         def __init__(self):
-            active_entities = []
+            self.active_entities = [Player(), Floor(0, 0, 0, 0)]
 
     def __init__(self):
         self.mouse_visible = False
@@ -43,7 +46,6 @@ class GameClass:
         self.running = True
         self.clock = pygame.time.Clock()
         self.active_scene = self.Scene()
-
-    display = DisplayClass()
+        self.display = self.DisplayClass(self)
 
 #   /game.py
