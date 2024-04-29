@@ -43,7 +43,7 @@ class GameClass:
 
     def __init__(self):
         self.mouse_visible = False
-        self.fps = 120
+        self.fps = 240
         self.running = True
         self.clock = pygame.time.Clock()
         self.display = self.DisplayClass(self)

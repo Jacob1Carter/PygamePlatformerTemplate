@@ -41,8 +41,9 @@ class Player:
 
         self.state = "fall"
 
-        self.gravity = 1
-        self.jump_speed = 5
+        self.speed = 600/game.fps
+        self.gravity = 120/game.fps
+        self.jump_speed = 600/game.fps
         self.jump_time = 0.3*game.fps
         self.jump_done = False
         self.fall_done = False
@@ -100,10 +101,10 @@ class Player:
 
         if keys_pressed[pygame.K_a]:
             if self.state != "wall-left":
-                self.x -= 5
+                self.x -= self.speed
         if keys_pressed[pygame.K_d]:
             if self.state != "wall-right":
-                self.x += 5
+                self.x += self.speed
 
         if self.state == "jump":
             decay_factor = 0.995
@@ -145,13 +146,22 @@ class Player:
 
             self.bullets = []
 
+            self.max_cooldown = 0.1*player.game.fps
+            self.cooldown = 0
+
         def move(self, mouse_pressed, mousex, mousey):
             self.x = self.player.x
             self.y = self.player.y
             self.angle = calculate_angle(self.x, self.y, mousex, mousey)
 
-            if mouse_pressed[0]:
-                self.bullets.append(self.Bullet(self))
+            if self.cooldown > 0:
+                self.cooldown -= 1
+            else:
+                if mouse_pressed[0]:
+                    self.bullets.append(self.Bullet(self))
+                    self.cooldown = self.max_cooldown
+                elif self.cooldown != 0:
+                    self.cooldown = 0
 
             for bullet in self.bullets:
                 bullet.move()
@@ -183,7 +193,7 @@ class Player:
                 self.y = gun.y + gun.height * math.sin(math.radians(gun.angle))
                 self.width = 3
                 self.height = 3
-                self.speed = 10
+                self.speed = 1300/self.gun.player.game.fps
                 self.angle = gun.angle
 
             def move(self):
