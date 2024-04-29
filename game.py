@@ -1,7 +1,7 @@
 #   game.py
 import pygame
 from const import COLOURS
-from entities import Player, Floor
+from entities import Player, Foreground
 from ui import Reticule
 
 
@@ -19,7 +19,7 @@ class GameClass:
             self.reticule = Reticule()
 
         def refresh(self, mousex, mousey):
-            self.win.fill(COLOURS.black)
+            self.win.fill(COLOURS.dark_grey)
 
             self.refresh_game_view()
 
@@ -37,15 +37,16 @@ class GameClass:
             reticule.display(mousex, mousey, self.win)
 
     class Scene:
-        def __init__(self):
-            self.active_entities = [Player(), Floor(0, 0, 0, 0)]
+        def __init__(self, game):
+            self.gravity = 10
+            self.active_entities = [Player(game), Foreground(resolution=game.display.resolution), Foreground(top=game.display.resolution[1]-250, left=400, width=250, height=100)]
 
     def __init__(self):
         self.mouse_visible = False
         self.fps = 120
         self.running = True
         self.clock = pygame.time.Clock()
-        self.active_scene = self.Scene()
         self.display = self.DisplayClass(self)
+        self.active_scene = self.Scene(self)
 
 #   /game.py

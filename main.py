@@ -2,6 +2,7 @@
 import pygame
 
 from game import GameClass
+from entities import Player
 
 
 def main():
@@ -24,6 +25,12 @@ def main():
         mousex, mousey = pygame.mouse.get_pos()
 
         #   Game loop
+
+        for entity in game.active_scene.active_entities:
+            entity.move(keys_pressed, mouse_pressed, mousex, mousey)
+
+            if isinstance(entity, Player):
+                entity.check_state(game.active_scene.active_entities)
 
         #   refresh display and loop for next frame
         game.display.refresh(mousex, mousey)
