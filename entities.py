@@ -42,6 +42,9 @@ class Player:
 
         self.state = "fall"
 
+        self.max_health = 1000
+        self.health = self.max_health
+
         self.speed = 600/game.fps
         self.gravity = 120/game.fps
         self.jump_speed = 600/game.fps
@@ -55,6 +58,8 @@ class Player:
         self.ui = []
 
         self.gun = self.Gun(self)
+
+        self.ui.append(Bar(self, "ammo", self.health, self.max_health, COLOURS.black, COLOURS.red, 10, 10, True))
 
     def check_state(self):
         self.jump_done = False
@@ -96,7 +101,7 @@ class Player:
                                 self.y = entity.top - self.height // 2
                                 self.state = "idle"
 
-    def update(self, keys_pressed, mouse_pressed, mousex, mousey):
+    def update(self, keys_pressed, keys_down, mouse_pressed, mousex, mousey):
         self.check_state()
 
         if keys_pressed[pygame.K_SPACE]:
@@ -116,9 +121,11 @@ class Player:
             jump_speed = exponential_decay(self.jump_speed, decay_factor, self.active_jump_time)
             self.y -= jump_speed
         elif self.state == "fall":
-            self.y += self.game.active_scene.gravity*self.gravity * normalizer(self.active_fall_time, self.terminal_fall_time)
+            self.y += self.game.active_scene.gravity*self.gravity * normalizer(
+                self.active_fall_time, self.terminal_fall_time
+            )
 
-        self.gun.update(mouse_pressed, mousex, mousey)
+        self.gun.update(keys_down, mouse_pressed, mousex, mousey)
 
     def update_ui(self):
         pass
@@ -165,13 +172,37 @@ class Player:
 
             self.state = "active"
             
-            player.ui.append(Bar(self, "ammo", self.ammo, self.max_ammo, COLOURS.black, COLOURS.red, 10, 10, True))
-            player.ui.append(Bar(self, "reload", self.reload_time, self.reload_speed, COLOURS.black, COLOURS.blue, 10, 30))
+            player.ui.append(Bar(
+                self,
+                "ammo",
+                self.ammo,
+                self.max_ammo,
+                COLOURS.black,
+                COLOURS.purple,
+                10,
+                50,
+                True
+            ))
+            player.ui.append(Bar(
+                self,
+                "reload",
+                self.reload_time,
+                self.reload_speed,
+                COLOURS.black,
+                COLOURS.blue,
+                10,
+                70
+            ))
 
-        def update(self, mouse_pressed, mousex, mousey):
+        def update(self, keys_down, mouse_pressed, mousex, mousey):
             self.x = self.player.x
             self.y = self.player.y
             self.angle = calculate_angle(self.x, self.y, mousex, mousey)
+
+            if pygame.K_r in keys_down:
+                self.ammo = 0
+                self.state = "reload"
+                self.reload_time = self.reload_speed
 
             if self.cooldown > 0:
                 self.cooldown -= 1
@@ -222,7 +253,10 @@ class Player:
                 win,
                 COLOURS.black,
                 (self.x, self.y),
-                (self.x + self.height * math.cos(math.radians(self.angle)), self.y + self.height * math.sin(math.radians(self.angle))),
+                (
+                    self.x + self.height * math.cos(math.radians(self.angle)),
+                    self.y + self.height * math.sin(math.radians(self.angle))
+                ),
                 self.width
             )
             pygame.draw.circle(
@@ -250,7 +284,8 @@ class Player:
                 self.x += self.speed * math.cos(math.radians(self.angle))
                 self.y += self.speed * math.sin(math.radians(self.angle))
 
-                if self.x < 0 or self.x > self.gun.player.game.display.resolution[0] or self.y < 0 or self.y > self.gun.player.game.display.resolution[1]:
+                if self.x < 0 or self.x > self.gun.player.game.display.resolution[0] or \
+                        self.y < 0 or self.y > self.gun.player.game.display.resolution[1]:
                     self.active = False
 
                 for entity in self.gun.player.game.active_scene.active_entities:
@@ -300,7 +335,7 @@ class Foreground:
         self.right = self.left + self.width
         self.bottom = self.top + self.height
 
-    def update(self, keys_pressed, mouse_pressed, mousex, mousey):
+    def update(self, keys_pressed, keys_down, mouse_pressed, mousex, mousey):
         pass
 
     def update_ui(self):
