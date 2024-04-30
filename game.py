@@ -36,6 +36,10 @@ class GameClass:
             #   Reticule
             reticule.display(mousex, mousey, self.win)
 
+            for entity in self.game.active_scene.active_entities:
+                for ui in entity.ui:
+                    ui.display(self.win)
+
     class Scene:
         def __init__(self, game):
             self.gravity = 10

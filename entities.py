@@ -1,6 +1,7 @@
 #   entities.py
 import pygame
 
+from ui import Bar
 from const import COLOURS
 
 import math
@@ -51,12 +52,14 @@ class Player:
         self.active_fall_time = 0
         self.terminal_fall_time = 0.9*game.fps
 
+        self.ui = []
+
         self.gun = self.Gun(self)
 
-    def check_state(self, entities):
+    def check_state(self):
         self.jump_done = False
         self.fall_done = False
-        for entity in entities:
+        for entity in self.game.active_scene.active_entities:
             if isinstance(entity, Foreground):
                 if self.bottom < entity.top:
                     if self.state == "jump":
@@ -93,7 +96,9 @@ class Player:
                                 self.y = entity.top - self.height // 2
                                 self.state = "idle"
 
-    def move(self, keys_pressed, mouse_pressed, mousex, mousey):
+    def update(self, keys_pressed, mouse_pressed, mousex, mousey):
+        self.check_state()
+
         if keys_pressed[pygame.K_SPACE]:
             if self.state == "idle":
                 self.state = "jump"
@@ -113,7 +118,10 @@ class Player:
         elif self.state == "fall":
             self.y += self.game.active_scene.gravity*self.gravity * normalizer(self.active_fall_time, self.terminal_fall_time)
 
-        self.gun.move(mouse_pressed, mousex, mousey)
+        self.gun.update(mouse_pressed, mousex, mousey)
+
+    def update_ui(self):
+        pass
 
     def display(self, win):
         self.left = self.x - self.width // 2
@@ -149,7 +157,18 @@ class Player:
             self.max_cooldown = 0.1*player.game.fps
             self.cooldown = 0
 
-        def move(self, mouse_pressed, mousex, mousey):
+            self.max_ammo = 30
+            self.ammo = self.max_ammo
+
+            self.reload_speed = 1*player.game.fps
+            self.reload_time = 0
+
+            self.state = "active"
+            
+            player.ui.append(Bar(self, "ammo", self.ammo, self.max_ammo, COLOURS.black, COLOURS.red, 10, 10, True))
+            player.ui.append(Bar(self, "reload", self.reload_time, self.reload_speed, COLOURS.black, COLOURS.blue, 10, 30))
+
+        def update(self, mouse_pressed, mousex, mousey):
             self.x = self.player.x
             self.y = self.player.y
             self.angle = calculate_angle(self.x, self.y, mousex, mousey)
@@ -158,15 +177,47 @@ class Player:
                 self.cooldown -= 1
             else:
                 if mouse_pressed[0]:
-                    self.bullets.append(self.Bullet(self))
-                    self.cooldown = self.max_cooldown
+                    if self.ammo > 0:
+                        self.shoot()
+                    elif self.reload_time == 0:
+                        self.state = "reload"
+                        self.reload_time = self.reload_speed
                 elif self.cooldown != 0:
                     self.cooldown = 0
 
+            print(self.ammo)
+
+            if self.state == "reload":
+                if self.reload_time <= 0:
+                    self.ammo = self.max_ammo
+                    self.reload_time = 0
+                    self.state = "active"
+                else:
+                    self.reload_time -= 1
+
             for bullet in self.bullets:
-                bullet.move()
-                if bullet.x < 0 or bullet.x > self.player.game.display.resolution[0] or bullet.y < 0 or bullet.y > self.player.game.display.resolution[1]:
+                bullet.update()
+
+                if not bullet.active:
                     self.bullets.remove(bullet)
+
+            self.update_ui()
+
+        def update_ui(self):
+            for ui in self.player.ui:
+                if ui.owner == self:
+                    if isinstance(ui, Bar):
+                        if ui.tag == "ammo":
+                            ui.current = self.ammo
+                            ui.maximum = self.max_ammo
+                        elif ui.tag == "reload":
+                            ui.current = self.reload_time
+                            ui.maximum = self.reload_speed
+
+        def shoot(self):
+            self.bullets.append(self.Bullet(self))
+            self.cooldown = self.max_cooldown
+            self.ammo -= 1
 
         def display(self, win):
             pygame.draw.line(
@@ -193,12 +244,24 @@ class Player:
                 self.y = gun.y + gun.height * math.sin(math.radians(gun.angle))
                 self.width = 3
                 self.height = 3
-                self.speed = 1300/self.gun.player.game.fps
+                self.speed = 3400/self.gun.player.game.fps
                 self.angle = gun.angle
+                self.active = True
 
-            def move(self):
+            def update(self):
                 self.x += self.speed * math.cos(math.radians(self.angle))
                 self.y += self.speed * math.sin(math.radians(self.angle))
+
+                if self.x < 0 or self.x > self.gun.player.game.display.resolution[0] or self.y < 0 or self.y > self.gun.player.game.display.resolution[1]:
+                    self.active = False
+
+                for entity in self.gun.player.game.active_scene.active_entities:
+                    if isinstance(entity, Foreground):
+                        if entity.left < self.x < entity.right and entity.top < self.y < entity.bottom:
+                            self.active = False
+
+            def update_ui(self):
+                pass
 
             def display(self, win):
                 pygame.draw.circle(
@@ -212,6 +275,7 @@ class Player:
 class Foreground:
     def __init__(self, left=-1, top=-1, width=-1, height=-1, resolution=None):
         self.colour = COLOURS.white
+        self.ui = []
 
         if width == -1:
             self.width = resolution[0]
@@ -238,7 +302,10 @@ class Foreground:
         self.right = self.left + self.width
         self.bottom = self.top + self.height
 
-    def move(self, keys_pressed, mouse_pressed, mousex, mousey):
+    def update(self, keys_pressed, mouse_pressed, mousex, mousey):
+        pass
+
+    def update_ui(self):
         pass
 
     def display(self, win):

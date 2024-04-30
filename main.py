@@ -27,10 +27,7 @@ def main():
         #   Game loop
 
         for entity in game.active_scene.active_entities:
-            entity.move(keys_pressed, mouse_pressed, mousex, mousey)
-
-            if isinstance(entity, Player):
-                entity.check_state(game.active_scene.active_entities)
+            entity.update(keys_pressed, mouse_pressed, mousex, mousey)
 
         #   refresh display and loop for next frame
         game.display.refresh(mousex, mousey)
