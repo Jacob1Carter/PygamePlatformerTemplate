@@ -2,7 +2,6 @@
 import pygame
 
 from game import GameClass
-from entities import Player
 
 
 def main():
