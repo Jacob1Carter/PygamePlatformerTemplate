@@ -185,8 +185,6 @@ class Player:
                 elif self.cooldown != 0:
                     self.cooldown = 0
 
-            print(self.ammo)
-
             if self.state == "reload":
                 if self.reload_time <= 0:
                     self.ammo = self.max_ammo

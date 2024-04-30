@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ebd8f10-d2ab-4a8b-8140-0490bd0d2c1d" name="Changes" comment="Shooting">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entities.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui.py" afterDir="false" />
-    </list>
+    <list default="true" id="5ebd8f10-d2ab-4a8b-8140-0490bd0d2c1d" name="Changes" comment="ammo and reload" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -110,7 +104,7 @@
       <workItem from="1713865636357" duration="76000" />
       <workItem from="1714414548707" duration="289000" />
       <workItem from="1714415195514" duration="1627000" />
-      <workItem from="1714461784245" duration="4678000" />
+      <workItem from="1714461784245" duration="5029000" />
     </task>
     <task id="LOCAL-00001" summary="Movement">
       <option name="closed" value="true" />
@@ -128,7 +122,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714416714082</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="ammo and reload">
+      <option name="closed" value="true" />
+      <created>1714466766033</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714466766033</updated>
+    </task>
+    <task id="LOCAL-00004" summary="ammo and reload">
+      <option name="closed" value="true" />
+      <created>1714466863976</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714466863976</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,9 +158,10 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Shooting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shooting" />
+    <MESSAGE value="ammo and reload" />
+    <option name="LAST_COMMIT_MESSAGE" value="ammo and reload" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PygamePlatformerTemplate$main.coverage" NAME="main Coverage Results" MODIFIED="1714466511111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PygamePlatformerTemplate$main.coverage" NAME="main Coverage Results" MODIFIED="1714466701889" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
