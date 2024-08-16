@@ -1,4 +1,4 @@
-#   const.py
+# const.py
 
 class COLOURS:
 
@@ -38,4 +38,4 @@ class COLOURS:
     salmon = (250, 128, 114)
     khaki = (240, 230, 140)
 
-#   /const.py
+# /const.py

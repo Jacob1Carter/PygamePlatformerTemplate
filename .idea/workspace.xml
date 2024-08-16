@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ebd8f10-d2ab-4a8b-8140-0490bd0d2c1d" name="Changes" comment="ammo and reload" />
+    <list default="true" id="5ebd8f10-d2ab-4a8b-8140-0490bd0d2c1d" name="Changes" comment="ammo and reload">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +52,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jacob/Subroutines/scripts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -105,6 +108,9 @@
       <workItem from="1714414548707" duration="289000" />
       <workItem from="1714415195514" duration="1627000" />
       <workItem from="1714461784245" duration="5029000" />
+      <workItem from="1714724854151" duration="69000" />
+      <workItem from="1714725229100" duration="33000" />
+      <workItem from="1715066894734" duration="211000" />
     </task>
     <task id="LOCAL-00001" summary="Movement">
       <option name="closed" value="true" />

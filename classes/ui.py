@@ -1,11 +1,11 @@
-#   ui.py
+# ui.py
 import pygame
 
-from const import COLOURS
+from classes.const import COLOURS
 
 
 class Reticule:
-    def __init__(self):
+    def __init__(self, game):
         self.width = 10
         self.height = 10
         self.thickness = 1
@@ -13,41 +13,44 @@ class Reticule:
         self.gap = 0
         self.colour = COLOURS.white
 
+        self.game = game
+
     def display(self, mousex, mousey, win):
-        pygame.draw.line(
-            win,
-            self.colour,
-            (mousex - self.width / 2 - self.gap / 2, mousey),
-            (mousex - self.gap / 2, mousey),
-            self.thickness
-        )  # left line
-        pygame.draw.line(
-            win,
-            self.colour,
-            (mousex + self.gap / 2, mousey),
-            (mousex + self.width / 2 + self.gap / 2, mousey),
-            self.thickness
-        )  # right line
-        pygame.draw.line(
-            win,
-            self.colour,
-            (mousex, mousey - self.gap / 2),
-            (mousex, mousey - self.height / 2 - self.gap / 2),
-            self.thickness
-        )  # top line
-        pygame.draw.line(
-            win,
-            self.colour,
-            (mousex, mousey + self.gap / 2),
-            (mousex, mousey + self.height / 2 + self.gap / 2),
-            self.thickness
-        )  # bottom line
-        pygame.draw.circle(
-            win,
-            self.colour,
-            (mousex, mousey),
-            self.dot
-        )  # dot
+        if not self.game.mouse_visible:
+            pygame.draw.line(
+                win,
+                self.colour,
+                (mousex - self.width / 2 - self.gap / 2, mousey),
+                (mousex - self.gap / 2, mousey),
+                self.thickness
+            )  # left line
+            pygame.draw.line(
+                win,
+                self.colour,
+                (mousex + self.gap / 2, mousey),
+                (mousex + self.width / 2 + self.gap / 2, mousey),
+                self.thickness
+            )  # right line
+            pygame.draw.line(
+                win,
+                self.colour,
+                (mousex, mousey - self.gap / 2),
+                (mousex, mousey - self.height / 2 - self.gap / 2),
+                self.thickness
+            )  # top line
+            pygame.draw.line(
+                win,
+                self.colour,
+                (mousex, mousey + self.gap / 2),
+                (mousex, mousey + self.height / 2 + self.gap / 2),
+                self.thickness
+            )  # bottom line
+            pygame.draw.circle(
+                win,
+                self.colour,
+                (mousex, mousey),
+                self.dot
+            )  # dot
 
 
 class Bar:
@@ -83,4 +86,6 @@ class Bar:
                 self.height
             )
         )
-#   /ui.py
+
+
+# /ui.py
